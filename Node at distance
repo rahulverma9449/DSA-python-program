@@ -1,0 +1,22 @@
+from collections import deque
+class Solution:
+    #Function to return count of nodes at a given distance from leaf nodes.
+    def printKDistantfromLeaf(self, root, k):
+        #code here
+        queue = deque([(root,[])])
+        pathtoleaf = []
+        while queue:
+            node,path = queue.popleft()
+            if node.left:
+                queue.append((node.left,path+[node]))
+            if node.right:
+                queue.append((node.right,path+[node]))
+            if not node.right and not node.left:
+                pathtoleaf.append((path+[node]))
+        result = set()
+        
+        for h in pathtoleaf:
+            if len(h)>=k+1:
+                result.add(h[-k-1])
+        return len(result)
+            
